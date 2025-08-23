@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SIDA — CVPR 2025 | BeC Readings</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta name="description" content="Notes on SIDA: Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model (CVPR 2025)." />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-left">
+        <a href="/" style="display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none">
+          <img class="site-icon" src="/assets/icon.jpeg" alt="BeC icon" />
+          <div class="titles">
+            <h1 style="font-size:1.4rem">BeC</h1>
+            <p class="tagline">BeChal Shum — Reading Paper Blog</p>
+          </div>
+        </a>
+      </div>
+      <div class="header-right">
+        ♫ love reading papers and coding while listening Jay Chou
+        蘆葦花開歲已寒 若霜又降路遙漫長
+        墻外是誰在吟唱 鳳求凰
+        梨園台上 西皮二黃
+        卻少了妳 無人問暖
+        誰在彼岸 天涯一方
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <div class="post-header">
+          <h1 class="post-title">Paper Reading: SIDA — Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model (CVPR 2025)</h1>
+          <p class="post-subtitle">A blog about my paper reading in the area of Deepfake Detection.</p>
+          <p class="post-subtitle">Enjoy the present, and the future will come on its own.</p>
+          <p class="post-subtitle">By <strong>BeChal Shum</strong> • Aug 23, 2025 • First post</p>
+        </div>
+
+        <section>
+          <p>I recently read a highly applied paper. I like its pragmatic style.</p>
+          <div class="bibtex code bibtex">
+<pre>@inproceedings{DBLP:conf/cvpr/HuangHLH00W0C25,
+  author       = {Zhenglin Huang and Jinwei Hu and Xiangtai Li and Yiwei He and Xingyu Zhao and Bei Peng and Baoyuan Wu and Xiaowei Huang and Guangliang Cheng},
+  title        = {SIDA: Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model},
+  booktitle    = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) 2025},
+  year         = {2025},
+}</pre>
+          </div>
+          
+          <figure class="paper-figure">
+            <img src="/assets/2025-08-23-sida/SIDA.png" alt="SIDA framework comparison showing detection, localization, and explanation capabilities" />
+            <figcaption>SIDA framework: unified detection, localization, and explanation compared to traditional approaches</figcaption>
+          </figure>
+          
+          <p>What I liked even more is that it has <a href="https://github.com/hzlsaber/SIDA" target="_blank" rel="noopener">code on GitHub</a> and the <a href="https://huggingface.co/datasets/saberzl/SID_Set" target="_blank" rel="noopener">dataset on Hugging Face</a>, lol. Lots of papers don't have code on GitHub, which makes it hard to reproduce results and study further.</p>
+        </section>
+
+        <hr />
+
+        <section>
+          <h2>Framework takeaway</h2>
+          <p>The paper argues that <span class="highlight">large vision–language models align text and visuals well, but for deepfake forensics they must also <em>detect</em>, <em>localize</em>, and <em>explain</em> manipulations.</span> I find this perspective complementary to contemporary works such as DIVID and LAVID.</p>
+
+          <div class="bibtex code">
+<pre>@article{liu2024turns,
+  title={Turns Out I'm Not Real: Towards Robust Detection of AI-Generated Videos},
+  author={Liu, Qingyuan and Shi, Pengyuan and Tsai, Yun-Yun and Mao, Chengzhi and Yang, Junfeng},
+  journal={arXiv preprint arXiv:2406.09601},
+  year={2024}
+}
+
+@article{liu2025lavid,
+  title={LAVID: An agentic LVLM framework for diffusion-generated video detection},
+  author={Liu, Qingyuan and Tsai, Yun-Yun and Zha, Ruijian and Li, Victoria and Shi, Pengyuan and Mao, Chengzhi and Yang, Junfeng},
+  journal={arXiv preprint arXiv:2502.14994},
+  year={2025}
+}</pre>
+          </div>
+
+          <p>And references from this paper are particularly practical. I will put them into my paper-to-read list:</p>
+          <div class="bibtex code">
+<pre>@article{lai2023lisa,
+  title={LISA: Reasoning Segmentation via Large Language Model},
+  author={Lai, Xin and Tian, Zhuotao and Chen, Yukang and Li, Yanwei and Yuan, Yuhui and Liu, Shu and Jia, Jiaya},
+  journal={arXiv preprint arXiv:2308.00692},
+  year={2023}
+}
+
+@misc{liu2023improvedllava,
+  title={Improved Baselines with Visual Instruction Tuning},
+  author={Liu, Haotian and Li, Chunyuan and Li, Yuheng and Lee, Yong Jae},
+  publisher={arXiv:2310.03744},
+  year={2023},
+}</pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>My notes on the architecture</h2>
+
+          <div class="callout">
+            This paper adopted masked token <> into the deepfake detection. It called me that there is another paper also applying masked token vector but in the diffusion language model to applying diffusui directly in the discrete space . after the token is replaced by mask is stated as mask in all the following steps, 
+            <p><strong>Special mask tokens</strong></p>
+            <ul>
+              <li><code>&lt;DET&gt;</code>: detection (real / synthetic / tampered)</li>
+              <li><code>&lt;SEG&gt;</code>: segmentation/localization (tampered regions)</li>
+            </ul>
+          </div>
+
+          <figure class="paper-figure">
+            <img src="/assets/2025-08-23-sida/pipeline of SIDA.png" alt="SIDA pipeline" />
+            <figcaption>The pipeline of SIDA: Given an image xi and the corresponding text input xt, the last hidden layer for the <DET> token provides
+              the detection result. If the detection result indicates a tampered image, SIDA extracts the <SEG> token to generate masks for the tampered
+              regions. This figure shows an example where the man’s face has been manipulated.</figcaption>
+          </figure>
+
+          <p><strong>Inputs</strong></p>
+          <ul>
+            <li>Image \(x_i\)</li>
+            <li>Text prompt \(x_t\) (e.g., "Can you identify if this image is real, fully synthetic, or tampered? Please mask the tampered object/part if it is tampered.")</li>
+          </ul>
+
+          <p>The VLM outputs a text description \(\hat{y}_{des}\), and its last hidden layer contains the <code>&lt;DET&gt;</code> and <code>&lt;SEG&gt;</code> embeddings, giving hidden states \(h_{hid}\).</p>
+
+          <figure class="equation-figure">
+            <img src="/assets/2025-08-23-sida/eq1.png" alt="SIDA equation showing the model's output formulation" />
+          </figure>
+
+          <ol>
+            <li>
+              <p><strong>Detection</strong> — predicts if the image is real, fully synthetic, or tampered.</p>
+              <ul>
+                <li>Extract \(h_{det}\) from <code>&lt;DET&gt;</code>.</li>
+                <li>A detection head \(F_{det}\) maps it to the output label, the final detection.</li>
+                
+                <figure class="equation-figure">
+                  <img src="/assets/2025-08-23-sida/eq2.png" alt="SIDA equation showing the model's output formulation" />
+                </figure>
+
+              </ul>
+            </li>
+            <li>
+              <p><strong>Segmentation / Localization</strong> — if tampered, highlight regions.</p>
+              <ul>
+                <li>Extract \(h_{seg}\) from <code>&lt;SEG&gt;</code>.</li>
+                <li>Fuse \(h_{det}\) and \(h_{seg}\) with multi-head self-attention (queries from detection, keys/values from segmentation).</li>
+                <li>Combine with frozen image encoder \(F_{enc}\) to get features \(f\).</li>
+                <li>Fuse \(\tilde{h}_{seg}\) and \(f\) in a decoder to predict mask \(\hat{M}\).</li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>Explanation</strong> — generate reasoning about lighting, textures, shadows, and other inconsistencies.</p>
+            </li>
+          </ol>
+
+          <p>Attention between detection and segmentation embeddings lets detection guide localization. The loss balances classification, segmentation, and explanation.</p>
+        </section>
+
+        <section>
+          <h2>Reproduction log</h2>
+          <p>Coming soon. I'm reproducing the results in this weekend.</p>
+          <p>Anyway, from a quick read of the paper, this feels like solid, solutions-driven work. I haven’t reproduced the result with available code yet, but pairing a social-media–centric benchmark (SID-Set) with a lightweight VLM extension (/) neatly unifies detection, localization, and explanation. As a single model, SIDA handles all three classes classifying: real vs fully synthetic vs tampered, localizing tampered regions, and generating explanations—and it posts strong results on their benchmark with decent robustness to common social-media distortions. </p>
+          <p>The most compelling point, in my view, is that <span class="highlight">VLMs shouldn't just align text and images; they also need to identify and segment manipulated regions and explain their decisions for both synthetic and tampered cases.</span> I completely agree that this is a promising direction for novel deepfake detection, moving beyond binary labels toward explainable, fine-grained forensics.</p>
+        </section>
+
+        <p><a href="/">← Back to home</a></p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> BeChal Shum</p>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </body>
+  </html>
+
+

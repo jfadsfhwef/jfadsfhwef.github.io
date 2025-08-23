@@ -1,0 +1,117 @@
+/* Base styles */
+:root {
+  --bg: #0b0c10;
+  --panel: #15171c;
+  --text: #e5e7eb;
+  --muted: #9aa2af;
+  --accent: #f59e0b;
+  --link: #facc15; /* yellow */
+  --link-hover: #84cc16; /* lime */
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Global link styles */
+a { color: var(--link); text-decoration: none; transition: color .15s ease; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid #22252b;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-right {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-left: 20px;
+}
+.site-icon {
+  width: 56px; height: 56px; border-radius: 12px; object-fit: cover;
+  box-shadow: 0 0 0 2px #2b2f37, 0 6px 18px rgba(0,0,0,.35);
+}
+.titles h1 { margin: 0; font-size: 1.6rem; }
+.tagline { margin: 2px 0 0; color: var(--muted); font-size: .95rem; }
+
+main { max-width: 880px; margin: 24px auto; padding: 0 16px; }
+
+.hero { display: grid; gap: 12px; justify-items: start; }
+.hero-gif { width: 220px; max-width: 50%; border-radius: 10px; border: 1px solid #2b2f37; }
+.hero-note { color: var(--muted); margin: 0 0 4px; }
+
+.post-list h2 { margin-top: 24px; }
+.post-list ul { list-style: none; padding: 0; margin: 8px 0 0; }
+.post-list li { padding: 14px 0; border-bottom: 1px dashed #2b2f37; }
+.post-list a { color: var(--link); text-decoration: none; }
+.post-list a:hover { color: var(--link-hover); text-decoration: underline; }
+.post-meta { margin-left: 8px; color: var(--muted); font-size: .9rem; }
+
+.site-footer { text-align: center; color: var(--muted); padding: 28px 12px 36px; }
+
+/* Post page */
+.post-header { display: grid; gap: 6px; margin-top: 8px; }
+.post-title { margin: 0; }
+.post-subtitle { margin: 0; color: var(--muted); }
+.bibtex { background: #0f1115; border: 1px solid #2b2f37; padding: 12px; border-radius: 8px; overflow-x: auto; }
+.callout { background: #111318; border-left: 3px solid var(--accent); padding: 10px 12px; border-radius: 6px; color: var(--text); }
+.code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+pre { white-space: pre-wrap; }
+.highlight { background: #facc15; color: #000; padding: 2px 4px; border-radius: 3px; }
+
+/* Paper figures */
+.paper-figure { 
+  margin: 20px 0; 
+  text-align: center; 
+  background: var(--panel); 
+  border: 1px solid #2b2f37; 
+  border-radius: 8px; 
+  padding: 16px; 
+}
+.paper-figure img { 
+  max-width: 100%; 
+  height: auto; 
+  border-radius: 6px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); 
+}
+.paper-figure figcaption { 
+  margin-top: 12px; 
+  color: var(--muted); 
+  font-size: 0.9rem; 
+  font-style: italic; 
+}
+
+/* Equation figures */
+.equation-figure {
+  margin: 16px 0;
+  text-align: center;
+}
+.equation-figure img {
+  background: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .hero-gif { width: 160px; max-width: 70%; }
+}
+
+
